@@ -43,10 +43,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> transactions = [];
 
-  List<Transaction> get _recentTransactions {
-    return _transactions.where((tx) {
+  List<Transaction> get recentTransactions {
+    return transactions.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
           Duration(days: 7),
@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addTx(String txTitle, double txAmount) {
+  void addTx(String txTitle, double txAmount) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
@@ -64,15 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     setState(() {
-      _transactions.add(newTx);
+      transactions.add(newTx);
     });
   }
 
-  void _startAddTx(BuildContext context) {
+  void startAddTx(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (_) {
-        return NewTransaction(_addTx);
+        return NewTransaction(addTx);
       },
     );
   }
@@ -86,21 +86,21 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => _startAddTx(context),
+            onPressed: () => startAddTx(context),
           ),
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Chart(_recentTransactions),
-          TransactionList(_transactions),
+          Chart(recentTransactions),
+          TransactionList(transactions),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => _startAddTx(context),
+        onPressed: () => startAddTx(context),
       ),
     );
   }

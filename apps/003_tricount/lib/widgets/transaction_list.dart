@@ -3,15 +3,15 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
-  final List<Transaction> _transactions;
+  final List<Transaction> transactions;
 
-  TransactionList(this._transactions);
+  TransactionList(this.transactions);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: _transactions.isEmpty
+      child: transactions.isEmpty
           ? Column(
               children: <Widget>[
                 Text(
@@ -31,7 +31,7 @@ class TransactionList extends StatelessWidget {
               ],
             )
           : ListView.builder(
-              itemCount: _transactions.length,
+              itemCount: transactions.length,
               itemBuilder: (ctx, index) {
                 return Card(
                   child: Row(
@@ -49,7 +49,7 @@ class TransactionList extends StatelessWidget {
                         ),
                         padding: EdgeInsets.all(10),
                         child: Text(
-                          '\$${_transactions[index].amount.toStringAsFixed(2)}',
+                          '\$${transactions[index].amount.toStringAsFixed(2)}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -61,12 +61,12 @@ class TransactionList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            _transactions[index].title,
+                            transactions[index].title,
                             style: Theme.of(context).textTheme.title,
                           ),
                           Text(
                             DateFormat.yMMMd()
-                                .format(_transactions[index].date),
+                                .format(transactions[index].date),
                             style: TextStyle(
                               color: Colors.grey,
                             ),

@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import './chart_bar.dart';
 import '../models/transaction.dart';
 
 class Chart extends StatelessWidget {
-  final List<Transaction> _recentTransactions;
+  final List<Transaction> recentTransactions;
 
-  Chart(this._recentTransactions);
+  Chart(this.recentTransactions);
 
-  List<Map<String, Object>> get _groupedTransactionValues {
-    return List.generate(7, (index) {
+  List<Map<String, Object>> get txStats {
+    var totalSpending = 0.0;
+    var stats = List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
-      double totalSum = 0.0;
-      for (var tx in _recentTransactions) {
+      double amountPerDay = 0.0;
+      for (var tx in recentTransactions) {
         if (tx.date.day == weekDay.day &&
             tx.date.month == weekDay.month &&
             tx.date.year == weekDay.year) {
-          totalSum += tx.amount;
+          amountPerDay += tx.amount;
         }
       }
+      totalSpending += amountPerDay;
       return {
-        'day': DateFormat.E().format(weekDay).substring(0, 2),
-        'amount': totalSum,
+        'day': DateFormat.E().format(weekDay)[0],
+        'amount': amountPerDay,
       };
     });
+
+    for (Map<String, Object> stat in stats) {
+      stat['pctOfTotal'] = totalSpending == 0.0
+          ? 0.0
+          : (stat['amount'] as double) / totalSpending;
+    }
+
+    return stats;
   }
 
   @override
@@ -30,10 +41,21 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: _groupedTransactionValues.map((data) {
-          return Text('${data['day']} : ${data['amount']}');
-        }).toList(),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: txStats.map((tx) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                tx['day'],
+                tx['amount'],
+                tx['pctOfTotal'],
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
