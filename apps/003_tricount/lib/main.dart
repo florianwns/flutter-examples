@@ -14,12 +14,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         accentColor: Colors.amber,
+        errorColor: Colors.red,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+              ),
+              button: TextStyle(
+                color: Colors.white,
               ),
             ),
         appBarTheme: AppBarTheme(
@@ -43,10 +47,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> transactions = [];
+  final List<Transaction> _transactions = [];
 
-  List<Transaction> get recentTransactions {
-    return transactions.where((tx) {
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
           Duration(days: 7),
@@ -55,16 +59,22 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void addTx(String txTitle, double txAmount) {
+  void _addTx(String txTitle, double txAmount, DateTime txDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: txDate,
       id: DateTime.now().toString(),
     );
 
     setState(() {
-      transactions.add(newTx);
+      _transactions.add(newTx);
+    });
+  }
+
+  void _deleteTx(String id) {
+    setState(() {
+      _transactions.removeWhere((tx) => tx.id == id);
     });
   }
 
@@ -72,29 +82,41 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
       context: context,
       builder: (_) {
-        return NewTransaction(addTx);
+        return NewTransaction(_addTx);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      centerTitle: false,
+      title: Text('Tricount'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => startAddTx(context),
+        ),
+      ],
+    );
+
+    final usefulHeight = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        appBar.preferredSize.height;
+
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text('Tricount'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => startAddTx(context),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Chart(recentTransactions),
-          TransactionList(transactions),
+          Container(
+            height: usefulHeight * 0.25,
+            child: Chart(_recentTransactions),
+          ),
+          Container(
+            height: usefulHeight * 0.75,
+            child: TransactionList(_transactions, _deleteTx),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

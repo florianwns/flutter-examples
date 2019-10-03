@@ -8,7 +8,7 @@ class Chart extends StatelessWidget {
 
   Chart(this.recentTransactions);
 
-  List<Map<String, Object>> get txStats {
+  List<Map<String, Object>> get txStatsForTheLast7Days {
     var totalSpending = 0.0;
     var stats = List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
@@ -33,7 +33,7 @@ class Chart extends StatelessWidget {
           : (stat['amount'] as double) / totalSpending;
     }
 
-    return stats;
+    return stats.reversed.toList();
   }
 
   @override
@@ -45,7 +45,7 @@ class Chart extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: txStats.map((tx) {
+          children: txStatsForTheLast7Days.map((tx) {
             return Flexible(
               fit: FlexFit.tight,
               child: ChartBar(
