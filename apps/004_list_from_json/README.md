@@ -1,6 +1,8 @@
 # Create a ListView from Json Data
 
-A Flutter project with a movie list from JSON. 
+A Flutter project with a movie list imported from JSON data. 
+
+![](screenshots/1.png)
 
 ## Components
 - ListView
@@ -8,3 +10,4 @@ A Flutter project with a movie list from JSON.
 
 ## Sources
 Movie list : [wikipedia-movie-data](https://github.com/prust/wikipedia-movie-data)
+
