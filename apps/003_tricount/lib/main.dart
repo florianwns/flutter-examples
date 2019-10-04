@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
 import './models/transaction.dart';
 import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
@@ -48,6 +51,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
@@ -89,6 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       centerTitle: false,
       title: Text('Tricount'),
@@ -100,8 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final usefulHeight = MediaQuery.of(context).size.height -
-        MediaQuery.of(context).padding.top -
+    final usefulHeight = mediaQuery.size.height -
+        mediaQuery.padding.top -
         appBar.preferredSize.height;
 
     return Scaffold(
@@ -109,21 +115,49 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            height: usefulHeight * 0.25,
-            child: Chart(_recentTransactions),
-          ),
-          Container(
-            height: usefulHeight * 0.75,
-            child: TransactionList(_transactions, _deleteTx),
-          ),
+          if (isLandscape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Show Chart'),
+                Switch.adaptive(
+                  activeColor: Theme.of(context).accentColor,
+                  value: _showChart,
+                  onChanged: (val) {
+                    setState(() => _showChart = val);
+                  },
+                ),
+              ],
+            ),
+          if (isLandscape)
+            _showChart
+                ? Container(
+                    height: usefulHeight * 0.7,
+                    child: Chart(_recentTransactions),
+                  )
+                : Container(
+                    height: usefulHeight * 0.7,
+                    child: TransactionList(_transactions, _deleteTx),
+                  ),
+          if (!isLandscape)
+            Container(
+              height: usefulHeight * 0.25,
+              child: Chart(_recentTransactions),
+            ),
+          if (!isLandscape)
+            Container(
+              height: usefulHeight * 0.75,
+              child: TransactionList(_transactions, _deleteTx),
+            ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => startAddTx(context),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => startAddTx(context),
+            ),
     );
   }
 }
