@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import './models/transaction.dart';
@@ -95,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
     final appBar = AppBar(
       centerTitle: false,
       title: Text('Tricount'),
@@ -110,9 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mediaQuery.padding.top -
         appBar.preferredSize.height;
 
-    return Scaffold(
-      appBar: appBar,
-      body: Column(
+    final body = Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           if (isLandscape)
@@ -150,14 +147,16 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TransactionList(_transactions, _deleteTx),
             ),
         ],
-      ),
+      );
+
+    return Scaffold(
+      appBar: appBar,
+      body: body,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Platform.isIOS
-          ? Container()
-          : FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () => startAddTx(context),
-            ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => startAddTx(context),
+      ),
     );
   }
 }
