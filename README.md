@@ -4,9 +4,14 @@
 
 
 Lists of examples created with Flutter.
-Some of these scripts are inspired by various tutorials found on the net (Udemy, Youtube, Medium, ...), or simply ideas that go through my head.
+
 
 ![](images/flutter_logo.svg)
+
+Some of these scripts are inspired by various tutorials found on the net (Udemy, Youtube, Medium, ...), or simply ideas that go through my head.
+
+
+This Git serves me especially to remember what I have been able to code in the past.
 
 ## Examples
 
