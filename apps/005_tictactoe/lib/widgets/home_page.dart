@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   Set _player1;
   Set _player2;
   int _activePlayer;
-  bool _autoplay = true;
+  bool _playAgainstComputer = true;
 
   @override
   void initState() {
@@ -71,14 +71,18 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         );
-      } else if (_activePlayer == 2 && _autoplay) {
-        final Set emptyCells = _emptyCells;
-        if (emptyCells.length > 0) {
-          final int newIndex = Random().nextInt(emptyCells.length);
-          _playGame(_buttonList[emptyCells.elementAt(newIndex)]);
-        }
+      } else if (_activePlayer == 2 && _playAgainstComputer) {
+        _autoplay();
       }
     });
+  }
+
+  void _autoplay() {
+    final Set emptyCells = _emptyCells;
+    if (emptyCells.length > 0) {
+      final int newIndex = Random().nextInt(emptyCells.length);
+      _playGame(_buttonList[emptyCells.elementAt(newIndex)]);
+    }
   }
 
   int _checkwinner() {
@@ -105,6 +109,15 @@ class _HomePageState extends State<HomePage> {
       }
     }
     return winner;
+  }
+
+  void _toggleAutoplay() {
+    setState(() {
+      _playAgainstComputer = !_playAgainstComputer;
+      if (_activePlayer == 2 && _playAgainstComputer) {
+        _autoplay();
+      }
+    });
   }
 
   @override
@@ -146,27 +159,44 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          RaisedButton(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    "Reset",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Container(
+                child: RaisedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "Reset",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      ),
+                      Icon(
+                        Icons.sync,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ],
                   ),
+                  color: Colors.purple,
+                  padding: const EdgeInsets.all(20.0),
+                  onPressed: _resetGame,
                 ),
-                Icon(
-                  Icons.sync,
+              ),
+              RaisedButton(
+                child: Icon(
+                  Icons.computer,
                   color: Colors.white,
                   size: 30,
                 ),
-              ],
-            ),
-            color: Colors.purple,
-            padding: const EdgeInsets.all(20.0),
-            onPressed: _resetGame,
+                color: _playAgainstComputer ? Colors.purple : Colors.grey,
+                padding: const EdgeInsets.all(20.0),
+                onPressed: _toggleAutoplay,
+              ),
+            ],
           ),
         ],
       ),
