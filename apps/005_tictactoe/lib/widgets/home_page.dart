@@ -76,7 +76,6 @@ class _HomePageState extends State<HomePage> {
         if (emptyCells.length > 0) {
           final int newIndex = Random().nextInt(emptyCells.length);
           _playGame(_buttonList[emptyCells.elementAt(newIndex)]);
-          return;
         }
       }
     });
