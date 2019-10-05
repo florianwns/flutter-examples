@@ -56,8 +56,22 @@ class _HomePageState extends State<HomePage> {
         _player2.add(btn.id);
       }
       btn.enabled = false;
-    
-      if (_activePlayer == 2 && _autoplay) {
+
+      int winner = _checkwinner();
+
+      if([1,2].contains(winner)){
+        showDialog(
+          context: context,
+          builder: (_) => CustomDialog(
+            "Player $winner Won",
+            "Press the reset button to start again",
+            () {
+              if (Navigator.canPop(context)) Navigator.pop(context);
+              _resetGame();
+            },
+          ),
+        );
+      } else if (_activePlayer == 2 && _autoplay) {
         final Set emptyCells = _emptyCells;
         if(emptyCells.length > 0){
           final int newIndex = Random().nextInt(emptyCells.length);
@@ -65,12 +79,10 @@ class _HomePageState extends State<HomePage> {
           return;
         }
       }
-      
-      _checkwinner();
     });
   }
 
-  void _checkwinner() {
+  int _checkwinner() {
     final List<Set> winningCombinations = const [
       {0, 1, 2},
       {3, 4, 5},
@@ -93,22 +105,7 @@ class _HomePageState extends State<HomePage> {
         break;
       }
     }
-
-    if (winner == null) {
-      return;
-    }
-
-    showDialog(
-      context: context,
-      builder: (_) => CustomDialog(
-        "Player $winner Won",
-        "Press the reset button to start again",
-        () {
-          if (Navigator.canPop(context)) Navigator.pop(context);
-          _resetGame();
-        },
-      ),
-    );
+    return winner;
   }
 
   @override
