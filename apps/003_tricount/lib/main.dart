@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: Text('Tricount'),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
           onPressed: () => startAddTx(context),
         ),
       ],
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('Show Chart'),
+                const Text('Show Chart'),
                 Switch.adaptive(
                   activeColor: Theme.of(context).accentColor,
                   value: _showChart,
@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: body,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () => startAddTx(context),
       ),
     );

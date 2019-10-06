@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
-  final void Function(String, double, DateTime) addTx;
+  final void Function(String, double, DateTime) _addTx;
 
-  NewTransaction(this.addTx);
+  NewTransaction(this._addTx);
 
   @override
   _NewTransactionState createState() => _NewTransactionState();
@@ -27,7 +27,7 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    widget.addTx(
+    widget._addTx(
       title,
       amount,
       _selectedDate,
@@ -100,7 +100,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 ),
               ),
               RaisedButton(
-                child: Text('Add Transaction'),
+                child: const Text('Add Transaction'),
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).textTheme.button.color,
                 onPressed: _submitData,
