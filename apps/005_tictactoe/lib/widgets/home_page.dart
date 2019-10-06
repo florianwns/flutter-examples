@@ -11,10 +11,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<GameButton> _buttonList;
-  Set _player1;
-  Set _player2;
+  Set _player1Cells;
+  Set _player2Cells;
+  Set _emptyCells;
   int _activePlayer;
   bool _playAgainstComputer = true;
+  int _winner;
+  final List<Set> _winningCombinations = const [
+    {0, 1, 2},
+    {3, 4, 5},
+    {6, 7, 8},
+    {0, 3, 6},
+    {1, 4, 7},
+    {2, 5, 8},
+    {0, 4, 8},
+    {2, 4, 6},
+  ];
 
   @override
   void initState() {
@@ -23,12 +35,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _initGame() {
-    _player1 = Set();
-    _player2 = Set();
+    _winner = null;
     _activePlayer = 1;
-    _buttonList = List<GameButton>.generate(9, (index) {
-      return GameButton(id: index);
-    });
+
+    _player1Cells = Set();
+    _player2Cells = Set();
+    _emptyCells = Set.of(List.generate(9, (i) => i));
+
+    _buttonList = _emptyCells.map((index) => GameButton(id: index)).toList();
   }
 
   void _resetGame() {
@@ -37,33 +51,31 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Set get _emptyCells {
-    return Set.of(List.generate(9, (i) => i))
-        .difference(_player1.union(_player2));
-  }
-
   void _playGame(GameButton btn) {
+    if (_winner != null) return;
+
     setState(() {
       if (_activePlayer == 1) {
         btn.icon = Icons.zoom_out_map;
         btn.backgroundColor = Colors.purple;
         _activePlayer = 2;
-        _player1.add(btn.id);
+        _player1Cells.add(btn.id);
       } else {
         btn.icon = Icons.album;
         btn.backgroundColor = Colors.teal;
         _activePlayer = 1;
-        _player2.add(btn.id);
+        _player2Cells.add(btn.id);
       }
       btn.enabled = false;
+      _emptyCells.remove(btn.id);
 
-      int winner = _checkwinner();
+      _checkWinner();
 
-      if ([1, 2].contains(winner)) {
+      if ([1, 2].contains(_winner)) {
         showDialog(
           context: context,
           builder: (_) => CustomDialog(
-            "Player $winner Won",
+            "Player $_winner Won",
             "Press the reset button to start again",
             () {
               if (Navigator.canPop(context)) Navigator.pop(context);
@@ -78,37 +90,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _autoplay() {
-    final Set emptyCells = _emptyCells;
-    if (emptyCells.length > 0) {
-      final int newIndex = Random().nextInt(emptyCells.length);
-      _playGame(_buttonList[emptyCells.elementAt(newIndex)]);
+    if (_emptyCells.length > 0) {
+      final int newIndex = Random().nextInt(_emptyCells.length);
+      _playGame(_buttonList[_emptyCells.elementAt(newIndex)]);
     }
   }
 
-  int _checkwinner() {
-    final List<Set> winningCombinations = const [
-      {0, 1, 2},
-      {3, 4, 5},
-      {6, 7, 8},
-      {0, 3, 6},
-      {1, 4, 7},
-      {2, 5, 8},
-      {0, 4, 8},
-      {2, 4, 6},
-    ];
-
-    int winner;
-    for (Set combination in winningCombinations) {
-      if (_player1.intersection(combination).length == combination.length) {
-        winner = 1;
+  void _checkWinner() {
+    for (Set combination in _winningCombinations) {
+      if (_player1Cells.intersection(combination).length == combination.length) {
+        _winner = 1;
         break;
       }
-      if (_player2.intersection(combination).length == combination.length) {
-        winner = 2;
+      if (_player2Cells.intersection(combination).length == combination.length) {
+        _winner = 2;
         break;
       }
     }
-    return winner;
   }
 
   void _toggleAutoplay() {
