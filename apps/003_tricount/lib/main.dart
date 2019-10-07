@@ -89,12 +89,48 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+  List<Widget> _buildLandscapeContent(double height) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text('Show Chart'),
+          Switch.adaptive(
+            activeColor: Theme.of(context).accentColor,
+            value: _showChart,
+            onChanged: (val) {
+              setState(() => _showChart = val);
+            },
+          ),
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: height * 0.7,
+              child: Chart(_recentTransactions),
+            )
+          : Container(
+              height: height * 0.7,
+              child: TransactionList(_transactions, _deleteTx),
+            ),
+    ];
+  }
 
-    final appBar = AppBar(
+  List<Widget> _buildPortraitContent(double height) {
+    return [
+      Container(
+        height: height * 0.25,
+        child: Chart(_recentTransactions),
+      ),
+      Container(
+        height: height * 0.75,
+        child: TransactionList(_transactions, _deleteTx),
+      ),
+    ];
+  }
+
+  Widget _buildAppBAr(){
+    return AppBar(
       centerTitle: false,
       title: Text('Tricount'),
       actions: <Widget>[
@@ -104,50 +140,26 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+  }
 
-    final usefulHeight = mediaQuery.size.height -
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
+    final AppBar appBar = _buildAppBAr();
+
+    final double usefulHeight = mediaQuery.size.height -
         mediaQuery.padding.top -
         appBar.preferredSize.height;
 
     final body = Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          if (isLandscape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('Show Chart'),
-                Switch.adaptive(
-                  activeColor: Theme.of(context).accentColor,
-                  value: _showChart,
-                  onChanged: (val) {
-                    setState(() => _showChart = val);
-                  },
-                ),
-              ],
-            ),
-          if (isLandscape)
-            _showChart
-                ? Container(
-                    height: usefulHeight * 0.7,
-                    child: Chart(_recentTransactions),
-                  )
-                : Container(
-                    height: usefulHeight * 0.7,
-                    child: TransactionList(_transactions, _deleteTx),
-                  ),
-          if (!isLandscape)
-            Container(
-              height: usefulHeight * 0.25,
-              child: Chart(_recentTransactions),
-            ),
-          if (!isLandscape)
-            Container(
-              height: usefulHeight * 0.75,
-              child: TransactionList(_transactions, _deleteTx),
-            ),
-        ],
-      );
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: (isLandscape)
+          ? _buildLandscapeContent(usefulHeight)
+          : _buildPortraitContent(usefulHeight),
+    );
 
     return Scaffold(
       appBar: appBar,
