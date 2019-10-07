@@ -5,7 +5,7 @@ import 'transaction_item.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  final Function(String) deleteTx;
+  final Function(Transaction) deleteTx;
 
   TransactionList(this.transactions, this.deleteTx);
 
@@ -34,12 +34,14 @@ class TransactionList extends StatelessWidget {
               );
             },
           )
-        : ListView.builder(
-            itemCount: transactions.length,
-            itemBuilder: (ctx, index) {
-              return new TransactionItem(
-                  transaction: transactions[index], deleteTx: deleteTx);
-            },
+        : ListView(
+            children: transactions
+                .map((tx) => TransactionItem(
+                      key: ObjectKey(tx),
+                      transaction: tx,
+                      deleteTx: deleteTx,
+                    ))
+                .toList(),
           );
   }
 }

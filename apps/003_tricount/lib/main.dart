@@ -47,9 +47,27 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _transactions = [];
   bool _showChart = false;
+
+  @override
+  void initState(){
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+  }
+
+  @override
+  void dispose(){
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
@@ -66,7 +84,6 @@ class _MyHomePageState extends State<MyHomePage> {
       title: txTitle,
       amount: txAmount,
       date: txDate,
-      id: DateTime.now().toString(),
     );
 
     setState(() {
@@ -74,9 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _deleteTx(String id) {
+  void _deleteTx(Transaction txToDelete) {
     setState(() {
-      _transactions.removeWhere((tx) => tx.id == id);
+      _transactions.removeWhere((tx) => identical(tx,txToDelete));
     });
   }
 
@@ -129,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
-  Widget _buildAppBAr(){
+  Widget _buildAppBAr() {
     return AppBar(
       centerTitle: false,
       title: Text('Tricount'),
@@ -141,7 +158,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
