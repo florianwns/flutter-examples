@@ -159,7 +159,7 @@ class Meals {
         'c4',
       ],
       title: 'Wiener Schnitzel',
-      affordability: Affordability.luxurious,
+      affordability: Affordability.expensive,
       complexity: Complexity.challenging,
       imageUrl:
           'https://cdn.pixabay.com/photo/2018/03/31/19/29/schnitzel-3279045_1280.jpg',
@@ -196,7 +196,7 @@ class Meals {
         'c10',
       ],
       title: 'Salad with Smoked Salmon',
-      affordability: Affordability.luxurious,
+      affordability: Affordability.expensive,
       complexity: Complexity.simple,
       imageUrl:
           'https://cdn.pixabay.com/photo/2016/10/25/13/29/smoked-salmon-salad-1768890_1280.jpg',
@@ -381,7 +381,7 @@ class Meals {
         'c10',
       ],
       title: 'Asparagus Salad with Cherry Tomatoes',
-      affordability: Affordability.luxurious,
+      affordability: Affordability.expensive,
       complexity: Complexity.simple,
       imageUrl:
           'https://cdn.pixabay.com/photo/2018/04/09/18/26/asparagus-3304997_1280.jpg',

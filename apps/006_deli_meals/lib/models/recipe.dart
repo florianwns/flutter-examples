@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 enum Complexity {
@@ -9,7 +10,7 @@ enum Complexity {
 enum Affordability {
   affordable,
   pricey,
-  luxurious,
+  expensive,
 }
 
 class Recipe {
@@ -42,4 +43,30 @@ class Recipe {
     @required this.isVegetarian,
     @required this.isLactoseFree,
   });
+
+  String get complexityText {
+    switch (complexity) {
+      case Complexity.simple:
+        return 'Simple';
+      case Complexity.challenging:
+        return 'Challenging';
+      case Complexity.hard:
+        return 'Hard';
+      default:
+        return '';
+    }
+  }
+
+  String get affordabilityText {
+    switch (affordability) {
+      case Affordability.affordable:
+        return 'Affordable';
+      case Affordability.pricey:
+        return 'Pricey';
+      case Affordability.expensive:
+        return 'Expensive';
+      default:
+        return '';
+    }
+  }
 }

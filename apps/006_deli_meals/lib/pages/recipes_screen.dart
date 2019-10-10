@@ -6,7 +6,7 @@ import '../models/category.dart';
 import '../models/recipe.dart';
 import '../widgets/recipe_item.dart';
 
-class RecipesScreen extends StatelessWidget {
+class RecipesPage extends StatelessWidget {
   static const routeName = '/recipes';
 
   @override
