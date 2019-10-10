@@ -41,8 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         backgroundColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Color.fromRGBO(255, 255, 255, 0.5),
+        selectedItemColor: Colors.white,
         currentIndex: _pageIndex,
         items: _pages.map(
           (page) => BottomNavigationBarItem(
