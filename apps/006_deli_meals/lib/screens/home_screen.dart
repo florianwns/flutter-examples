@@ -13,8 +13,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
   final _pages = [
-    CategoriesScreen(),
-    FavoritesScreen(),
+    {
+      'page': CategoriesScreen(),
+      'title': Text('Categories'),
+      'icon': Icon(Icons.category)
+    },
+    {
+      'page': FavoritesScreen(),
+      'title': Text('Favorites'),
+      'icon': Icon(Icons.star),
+    },
   ];
 
   void _selectPage(int index) {
@@ -27,25 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Deli Meals'),
+        title: _pages[_pageIndex]['title'],
       ),
-      body: _pages[_pageIndex],
+      body: _pages[_pageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
+        backgroundColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Theme.of(context).accentColor,
         currentIndex: _pageIndex,
-        type: BottomNavigationBarType.shifting,
-        items: [
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.category),
-            title: Text('Categories'),
+        items: _pages.map(
+          (page) => BottomNavigationBarItem(
+            icon: page['icon'],
+            title: page['title'],
           ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.star),
-            title: Text('Favorites'),
-          ),
-        ],
+        ).toList(),
       ),
     );
   }
