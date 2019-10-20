@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'categories_screen.dart';
 import 'favorites_screen.dart';
+import '../widgets/main_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -33,10 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppBar appBar = AppBar(title: _pages[_pageIndex]['title']);
     return Scaffold(
-      appBar: AppBar(
-        title: _pages[_pageIndex]['title'],
-      ),
+      appBar: appBar,
+      drawer: MainDrawer(appBar),
       body: _pages[_pageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
@@ -44,12 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedItemColor: Color.fromRGBO(255, 255, 255, 0.5),
         selectedItemColor: Colors.white,
         currentIndex: _pageIndex,
-        items: _pages.map(
-          (page) => BottomNavigationBarItem(
-            icon: page['icon'],
-            title: page['title'],
-          ),
-        ).toList(),
+        items: _pages
+            .map(
+              (page) => BottomNavigationBarItem(
+                icon: page['icon'],
+                title: page['title'],
+              ),
+            )
+            .toList(),
       ),
     );
   }

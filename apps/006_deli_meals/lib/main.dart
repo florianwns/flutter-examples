@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './screens/recipes_screen.dart';
 import './screens/recipe_detail_screen.dart';
 import './screens/home_screen.dart';
+import './screens/filters_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomeScreen(),
         RecipesScreen.routeName: (context) => RecipesScreen(),
         RecipeDetailScreen.routeName: (context) => RecipeDetailScreen(),
+        FiltersScreen.routeName: (context) => FiltersScreen(),
       },
       /*
         onGenerateRoute: (RouteSettings settings){ // pass in this method if routeName does'nt match
