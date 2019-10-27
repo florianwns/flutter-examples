@@ -13,21 +13,14 @@ enum P4PionType {
 class P4Pion {
   final P4PionType type;
 
-  const P4Pion({
-    @required this.type,
-  });
+  int column;
+  int row;
 
-  /// Color getter
-  Color get color {
-    switch (type) {
-      case P4PionType.red:
-        return Colors.red;
-      case P4PionType.yellow:
-        return Colors.yellow;
-      default:
-        return null;
-    }
-  }
+  P4Pion({
+    @required this.type,
+  }) : assert(type != null);
+
+  bool get isDroppable => column != null && row != null;
 
   /// Color getter
   Image get image {

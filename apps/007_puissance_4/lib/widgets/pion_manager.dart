@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../common/p4_engine.dart';
-import './pion.dart';
+import '../common/p4_game.dart';
+import '../common/p4_grid.dart';
 
-class PionManager extends StatelessWidget {
+import './animated_pion.dart';
+
+class PionManager extends StatefulWidget {
   final double width;
   final double pionDiameter;
 
@@ -16,37 +18,45 @@ class PionManager extends StatelessWidget {
   })  : assert(width != null),
         assert(pionDiameter != null);
 
-  List<Pion> buildPions(P4Engine game) {
-    List<Pion> children = [];
-    final pions = game.pions;
+  @override
+  _PionManagerState createState() => _PionManagerState();
+}
 
-    for (int i = 0; i < pions.length; i++) {
-      for (int j = 0; j < pions[i].length; j++) {
-        children.add(
-          Pion(
-            pos: Point(
-              i * pionDiameter,
-              j * pionDiameter,
-            ),
-            width: pionDiameter,
-            image: pions[i][j].image,
+class _PionManagerState extends State<PionManager> {
+  List<AnimatedPion> _pions = [];
+
+  List<AnimatedPion> buildPions(P4Game game, P4Grid grid) {
+    // Try to get the new pion from the engine
+    var pion = game.pion;
+    if (pion != null && pion.isDroppable) {
+      _pions.add(
+        AnimatedPion(
+          pos: Point(
+            pion.column * widget.pionDiameter,
+            (grid.cols - 1 - game.pion.row) * widget.pionDiameter,
           ),
-        );
-      }
+          width: widget.pionDiameter,
+          image: pion.image,
+          animationDuration: 1000 - game.pion.row * 100,
+        ),
+      );
+
+      // pass to the next player
+      game.nextPlayer();
     }
-    return children;
+    return _pions;
   }
 
   @override
   Widget build(BuildContext context) {
-    final game = Provider.of<P4Engine>(context);
+    final grid = Provider.of<P4Grid>(context);    
+    final game = Provider.of<P4Game>(context);
 
     return Container(
-      width: width,
-      height: width,
+      width: widget.width,
+      height: widget.width,
       child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: buildPions(game),
+        children: buildPions(game, grid),
       ),
     );
   }

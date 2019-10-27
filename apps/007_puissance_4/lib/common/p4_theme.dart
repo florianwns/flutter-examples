@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// A game theme
 class P4Theme {
   // Colors
-  static const Color colorCellOnHover = Color.fromRGBO(215, 215, 215, 0.8);
+  static const Color dropColor = Color.fromRGBO(215, 215, 215, 0.9);
 
   // Images
   static Image imgBackboard = Image.asset('assets/psd/backboard_d1550.png');
