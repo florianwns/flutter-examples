@@ -7,7 +7,8 @@ import './p4_player_manager.dart';
 /// A [P4Game] engine with a [P4Pion] grid
 /// By default the game grid size is 7 x 6
 class P4Game extends ChangeNotifier {
-  final Function callback;
+  // TODO : Implements the A.I. and game rules 
+  // TODO : Block the game until A.I. finish
 
   /// Player manager
   P4PlayerManager _players;
@@ -16,9 +17,7 @@ class P4Game extends ChangeNotifier {
   P4Pion _pion;
 
   /// Constructor
-  P4Game({
-    @required this.callback,
-  }) {
+  P4Game() {
     initGame();
   }
 
@@ -40,7 +39,6 @@ class P4Game extends ChangeNotifier {
   void nextPlayer() {
     // pass to the next player
     _players.next();
-
     newPion();
   }
 

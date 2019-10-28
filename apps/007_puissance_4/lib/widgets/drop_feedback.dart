@@ -27,7 +27,7 @@ class DropFeedback extends StatelessWidget {
   List<Widget> buildFeedback(P4Game game, P4Control control) {
     List<Widget> children = [];
 
-    if (control.touch != null && game.pion != null) {
+    if (control.isActivated && control.touch != null && game.pion != null) {
       final int column = control.touch.dx ~/ pionDiameter;
       children.add(
         Positioned(

@@ -43,16 +43,17 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/psd/backboard_d1550.png
-   - assets/psd/frontboard_d1550.png
-   - assets/psd/pionjaune1_d200.png
-   - assets/psd/pionjaune2_d200.png
-   - assets/psd/pionjaune3_d200.png
-   - assets/psd/pionjaune4_d200.png
-   - assets/psd/pionred1_d200.png
-   - assets/psd/pionred2_d200.png
-   - assets/psd/pionred3_d200.png
-   - assets/psd/pionred4_d200.png
+   - assets/images/background_d1536.png
+   - assets/images/backboard_d1550.png
+   - assets/images/frontboard_d1550.png
+   - assets/images/pionjaune1_d200.png
+   - assets/images/pionjaune2_d200.png
+   - assets/images/pionjaune3_d200.png
+   - assets/images/pionjaune4_d200.png
+   - assets/images/pionred1_d200.png
+   - assets/images/pionred2_d200.png
+   - assets/images/pionred3_d200.png
+   - assets/images/pionred4_d200.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

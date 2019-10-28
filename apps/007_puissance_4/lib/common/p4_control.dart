@@ -3,6 +3,17 @@ import 'package:flutter/material.dart';
 class P4Control extends ChangeNotifier {
   Offset touch;
 
+  bool _activated = true;
+
+  bool get isActivated => _activated;
+  
+  void activate({bool state = true}){
+    _activated = state;
+    notifyListeners();
+  }
+
+  void deactivate() => activate(state : false);
+
   void update(Offset pos, double width) {
     assert(pos != null);
     assert(width != null);
@@ -18,7 +29,8 @@ class P4Control extends ChangeNotifier {
   void release() {
     if (touch != null) {
       touch = null;
-      notifyListeners();
+      deactivate();
     }
   }
+
 }

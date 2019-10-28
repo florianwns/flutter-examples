@@ -27,7 +27,7 @@ class _GameControlState extends State<GameControl> {
   }
 
   void onRelease(P4Game game, P4Grid grid, P4Control control) {
-    if(control.touch != null){
+    if(control.isActivated && control.touch != null){
       final int column = control.touch.dx ~/ widget.pionDiameter;
       grid.add(column, game.pion);
     }

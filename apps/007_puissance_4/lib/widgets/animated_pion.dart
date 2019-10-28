@@ -17,16 +17,21 @@ class AnimatedPion extends StatefulWidget {
   /// in milliseconds
   final int animationDuration;
 
+  /// A function to be called when the animation finishes
+  final VoidCallback complete;
+
   /// Constructor
   const AnimatedPion({
     @required this.width,
     @required this.image,
     @required this.pos,
     @required this.animationDuration,
+    @required this.complete,
   })  : assert(width != null && width > 0),
         assert(image != null),
         assert(pos != null),
-        assert(animationDuration != null);
+        assert(animationDuration != null),
+        assert(complete != null);
 
   @override
   _AnimatedPionState createState() => _AnimatedPionState();
@@ -46,7 +51,12 @@ class _AnimatedPionState extends State<AnimatedPion>
 
     _animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: widget.animationDuration))
-      ..addListener(() => setState(() {}));
+      ..addListener(() => setState(() {}))
+      ..addStatusListener((AnimationStatus status){
+        if(status == AnimationStatus.completed){
+          widget.complete();
+        }
+      });
 
     _animation = Tween<double>(begin: 0.0, end: widget.pos.y).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.bounceOut),
