@@ -16,7 +16,7 @@ class DropFeedback extends StatelessWidget {
 
   DropFeedback({
     @required this.width,
-    @required this.pionDiameter,    
+    @required this.pionDiameter,
     @required this.pionRadius,
     @required this.color,
   })  : assert(width != null),
@@ -27,7 +27,14 @@ class DropFeedback extends StatelessWidget {
   List<Widget> buildFeedback(P4Game game, P4Control control) {
     List<Widget> children = [];
 
-    if (control.isActivated && control.touch != null && game.pion != null) {
+    final currentPion = game.currentPion;
+
+    // if the game is waiting for order and touch is activated
+    if (game.isWaitingForANewPion &&
+        control.isValid &&
+        control.isEnabled &&
+        currentPion != null) {
+      // Draw column feedback
       final int column = control.touch.dx ~/ pionDiameter;
       children.add(
         Positioned(
@@ -41,6 +48,7 @@ class DropFeedback extends StatelessWidget {
         ),
       );
 
+      // Draw pion feedback according to the touch position
       children.add(
         Pion(
           pos: Point(
@@ -48,7 +56,7 @@ class DropFeedback extends StatelessWidget {
             0.0,
           ),
           width: pionDiameter,
-          image: game.pion.image,
+          image: currentPion.image,
         ),
       );
     }

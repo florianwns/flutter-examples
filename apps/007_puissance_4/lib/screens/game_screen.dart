@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../common/p4_game.dart';
 
 import '../widgets/background_image.dart';
-import '../widgets/game_provider.dart';
+import '../widgets/game_board.dart';
 
 class GameScreen extends StatelessWidget {
   @override
@@ -18,12 +18,12 @@ class GameScreen extends StatelessWidget {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              builder: (_) => P4Game(),
+              builder: (_) => P4Game(cols: 7, rows: 6),
             ),
           ],
           child: Scaffold(
             appBar: AppBar(
-              title: Text('À vous de jouer'),
+              title: Text('Puissance 4'),
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               actions: <Widget>[
@@ -33,7 +33,7 @@ class GameScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             body: Column(
               children: <Widget>[
-                GameProvider(),
+                GameBoard(),
               ],
             ),
           ),

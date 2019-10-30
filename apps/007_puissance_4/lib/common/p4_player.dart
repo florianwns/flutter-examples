@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+
 import './p4_pion.dart';
 
 class P4Player {
-  final P4PionType pionType;
+  final P4Pion pion;
 
-  int score = 0;
+  int _score = 0;
+  get score => _score;
+  void won() => _score += 1;
 
-  P4Player(this.pionType);
-
-  P4Pion takeAPion() {
-    return P4Pion(type: pionType);
-  }
+  P4Player({
+    @required this.pion,
+  }) : assert(pion != null);
 }

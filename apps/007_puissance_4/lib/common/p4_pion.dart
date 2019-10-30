@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import './p4_theme.dart';
@@ -9,28 +11,60 @@ enum P4PionType {
   length,
 }
 
+/// A droppable [P4Pion] class
+class P4DroppablePion extends P4Pion {
+  final int column;
+  final int row;
+
+  P4DroppablePion({
+    @required type,
+    @required this.column,
+    @required this.row,
+  })  : assert(column != null),
+        assert(row != null),
+        super(type: type);
+}
+
 /// [P4Pion] class
 class P4Pion {
   final P4PionType type;
 
-  int column;
-  int row;
+  Image _image;
+  Image get image => _image;
 
   P4Pion({
     @required this.type,
-  }) : assert(type != null);
-
-  bool get isDroppable => column != null && row != null;
+  }) {
+    assert(type != null);
+    assert(type == P4PionType.red || type == P4PionType.yellow);
+    initImage();
+  }
 
   /// Color getter
-  Image get image {
+  void initImage() {
     switch (type) {
       case P4PionType.red:
-        return P4Theme.imgsPionRed[0];
+        _image =
+            P4Theme.imgsPionRed[Random().nextInt(P4Theme.imgsPionRed.length)];
+        break;
       case P4PionType.yellow:
-        return P4Theme.imgsPionJaune[0];
+        _image = P4Theme
+            .imgsPionJaune[Random().nextInt(P4Theme.imgsPionJaune.length)];
+        break;
       default:
-        return null;
+        _image = null;
+    }
+  }
+
+  @override
+  String toString() {
+    switch (type) {
+      case P4PionType.red:
+        return 'x';
+      case P4PionType.yellow:
+        return '0';
+      default:
+        return ' ';
     }
   }
 }

@@ -1,14 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:puissance_4/common/p4_control.dart';
+import 'package:puissance_4/common/p4_pion.dart';
 
 import '../common/p4_game.dart';
-import '../common/p4_grid.dart';
 import '../common/p4_control.dart';
 
-import './animated_pion.dart';
+import './falling_pion.dart';
 
 class PionManager extends StatefulWidget {
   final double width;
@@ -25,42 +22,89 @@ class PionManager extends StatefulWidget {
 }
 
 class _PionManagerState extends State<PionManager> {
-  List<AnimatedPion> _pions = [];
+  /// List of [FallingPion]
+  List<FallingPion> _pions = [];
 
-  List<AnimatedPion> buildPions(P4Game game, P4Grid grid, P4Control control) {
-    // Try to get the new pion from the engine
-    var pion = game.pion;
-    if (pion != null && pion.isDroppable) {
-      _pions.add(
-        AnimatedPion(
-          pos: Point(
-            pion.column * widget.pionDiameter,
-            (grid.cols - 1 - game.pion.row) * widget.pionDiameter,
-          ),
-          width: widget.pionDiameter,
+  void dropPion(P4Game game, P4DroppablePion pion, P4Control control) {
+    assert(pion != null && game != null);
+
+    _pions.add(
+      FallingPion(
+        key: UniqueKey(),
+        left: pion.column * widget.pionDiameter,
+        top: 0.0,
+        bottom: (game.cols - 1 - pion.row) * widget.pionDiameter,
+        width: widget.pionDiameter,
+        image: pion.image,
+        animationDuration: 1000 - pion.row * 100,
+        complete: () {
+          // Unblock touch control after animation
+          control.unblock();
+
+          // Check if there is a winner
+          game.checkIfThereIsAwinner();
+        },
+      ),
+    );
+  }
+
+  void pionsMustFall(P4Game game, P4Control control) {
+    assert(game != null);
+    final delay = 3000;
+    // Unblock touch control
+    List<FallingPion> pions = [];
+    for (var pion in _pions) {
+      int animationDuration = delay - ((pion.bottom / widget.width) * delay ~/ 2);
+      pions.add(
+        FallingPion(
+          key: UniqueKey(),
+          left: pion.left,
+          top: pion.bottom,
+          bottom: pion.bottom + widget.width,
+          width: pion.width,
           image: pion.image,
-          animationDuration: 1000 - game.pion.row * 100,
-          complete: () {
-            game.nextPlayer();
-            control.activate();
-          },
+          animationDuration: animationDuration,
+          complete: () {},
         ),
       );
     }
+    _pions = pions;
+
+    // delay the update control and clean the pions backup
+    Future.delayed(
+      Duration(milliseconds: delay),
+      () {
+        _pions = [];
+        control.unblock();
+      },
+    );
+  }
+
+  List<FallingPion> buildPions(P4Game game, P4Control control) {
+    // it the game has a new pion to drop
+    if (game.hasANewPionToDrop) {
+      // we take it and we drop it
+      final lastPionToDrop = game.lastPionAdded;
+      if (lastPionToDrop != null) {
+        dropPion(game, lastPionToDrop, control);
+      }
+    } else if (game.isNew && _pions.isNotEmpty) {
+      pionsMustFall(game, control);
+    }
+
     return _pions;
   }
 
   @override
   Widget build(BuildContext context) {
-    final grid = Provider.of<P4Grid>(context);
-    final game = Provider.of<P4Game>(context, listen: false);
+    final game = Provider.of<P4Game>(context);
     final control = Provider.of<P4Control>(context, listen: false);
 
     return Container(
       width: widget.width,
       height: widget.width,
       child: Stack(
-        children: buildPions(game, grid, control),
+        children: buildPions(game, control),
       ),
     );
   }

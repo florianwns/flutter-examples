@@ -1,22 +1,35 @@
+import 'p4_pion.dart';
 import 'p4_player.dart';
 
 /// List of [P4Player]
-class P4PlayerManager{
-  /// List of Players
-  List<P4Player> _players = [];
+class P4PlayerManager {
+  /// List of 2 Players
+  final List<P4Player> _players = [
+    P4Player(
+      pion: P4Pion(type: P4PionType.red),
+    ),
+    P4Player(
+      pion: P4Pion(type: P4PionType.yellow),
+    ),
+  ];
+
+  /// Keep track of who to start the game
+  int _startIndex = 0;
 
   /// Index of the current player
-  int _index = 0;
+  int _currentIndex = 0;
 
-  /// Constructor
-  P4PlayerManager(this._players) : assert(_players != null || _players.isEmpty);
+  void next() {
+    _currentIndex = (_currentIndex + 1) % _players.length;
+  }
 
-  void next(){
-    _index = (_index + 1) % _players.length;
+  void startWithAnOtherPlayer() {
+    _startIndex = (_startIndex + 1) % _players.length;
+    _currentIndex = 0;
   }
 
   /// Get the current player
-  P4Player get current{
-    return _players[_index];
+  P4Player get current {
+    return _players[_currentIndex];
   }
 }
