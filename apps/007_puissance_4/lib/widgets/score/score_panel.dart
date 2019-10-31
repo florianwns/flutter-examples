@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../common/p4_theme.dart';
+import '../../common/p4_theme.dart';
 import './score_bar.dart';
 
 

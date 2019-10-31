@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../common/p4_game.dart';
-import '../common/p4_theme.dart';
+import '../../common/p4_game.dart';
+import '../../common/p4_theme.dart';
 import './score_animation.dart';
 
 class ScoreBar extends StatefulWidget {

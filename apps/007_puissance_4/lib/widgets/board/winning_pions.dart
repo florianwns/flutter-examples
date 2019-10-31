@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../common/p4_game.dart';
-import '../common/p4_pion.dart';
+import '../../common/p4_game.dart';
+import '../../common/p4_pion.dart';
 
 class WinningPions extends StatelessWidget {
   final double width;

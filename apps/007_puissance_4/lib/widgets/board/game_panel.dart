@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../common/p4_theme.dart';
-import '../common/p4_control.dart';
+import '../../common/p4_theme.dart';
+import '../../common/p4_control.dart';
 
 import './pion_manager.dart';
 import './game_control.dart';
 import './drop_feedback.dart';
 import './winning_pions.dart';
 
-class GameBoard extends StatelessWidget {
+class GamePanel extends StatelessWidget {
   final int cols = 7;
   final int rows = 6;
 

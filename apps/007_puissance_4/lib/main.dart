@@ -7,6 +7,7 @@ class Puissance4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Puissance 4',
       theme: ThemeData(
         primarySwatch: Colors.blue,

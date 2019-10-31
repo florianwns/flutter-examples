@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../common/p4_game.dart';
-import '../common/p4_control.dart';
+import '../../common/p4_game.dart';
+import '../../common/p4_control.dart';
 
 import './pion.dart';
 

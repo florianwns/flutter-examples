@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../common/p4_game.dart';
 
 import '../widgets/background_image.dart';
-import '../widgets/game_board.dart';
-import '../widgets/score_panel.dart';
+import '../widgets/board/game_panel.dart';
+import '../widgets/score/score_panel.dart';
 
 class GameScreen extends StatelessWidget {
   @override
@@ -35,7 +35,7 @@ class GameScreen extends StatelessWidget {
             body: Column(
               children: <Widget>[
                 ScorePanel(),
-                GameBoard(),
+                GamePanel(),
               ],
             ),
           ),

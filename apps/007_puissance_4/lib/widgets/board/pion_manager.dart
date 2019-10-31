@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:puissance_4/common/p4_pion.dart';
 
-import '../common/p4_game.dart';
-import '../common/p4_control.dart';
+import '../../common/p4_game.dart';
+import '../../common/p4_control.dart';
 
 import './falling_pion.dart';
 
@@ -39,7 +39,7 @@ class _PionManagerState extends State<PionManager> {
         animationDuration: 1000 - pion.row * 100,
         complete: () {
           // Unblock touch control after animation
-          control.unblock();
+          control.activate();
 
           // Check if there is a winner
           game.checkIfThereIsAwinner();
@@ -75,7 +75,7 @@ class _PionManagerState extends State<PionManager> {
       Duration(milliseconds: delay),
       () {
         _pions = [];
-        control.unblock();
+        control.activate();
       },
     );
   }
