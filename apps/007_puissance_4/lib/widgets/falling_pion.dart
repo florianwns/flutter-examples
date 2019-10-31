@@ -57,16 +57,26 @@ class _FallingPionState extends State<FallingPion>
     super.initState();
 
     _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: widget.animationDuration))
+      vsync: this,
+      duration: Duration(milliseconds: widget.animationDuration),
+    )
       ..addListener(() => setState(() {}))
-      ..addStatusListener((AnimationStatus status) {
-        if (status == AnimationStatus.completed) {
-          widget.complete();
-        }
-      });
+      ..addStatusListener(
+        (AnimationStatus status) {
+          if (status == AnimationStatus.completed) {
+            widget.complete();
+          }
+        },
+      );
 
-    _animation = Tween<double>(begin: widget.top, end: widget.bottom).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.bounceOut),
+    _animation = Tween<double>(
+      begin: widget.top,
+      end: widget.bottom,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.bounceOut,
+      ),
     );
 
     _animationController.forward();

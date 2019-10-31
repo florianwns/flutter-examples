@@ -32,7 +32,7 @@ class GameBoard extends StatelessWidget {
       alignment: Alignment.topCenter,
       children: <Widget>[
         // BackBoard
-        P4Theme.imgBackboard,
+        P4Theme.backboardImg,
 
         // P4Control => Drop Visual Feedback
         DropFeedback(
@@ -49,7 +49,7 @@ class GameBoard extends StatelessWidget {
         ),
 
         // FrontBoard
-        P4Theme.imgFrontboard,
+        P4Theme.frontboardImg,
 
         // P4Game => Winning Lines
         WinningPions(

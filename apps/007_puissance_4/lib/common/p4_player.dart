@@ -6,7 +6,7 @@ class P4Player {
   final P4Pion pion;
 
   int _score = 0;
-  get score => _score;
+  int get score => _score;
   void won() => _score += 1;
 
   P4Player({

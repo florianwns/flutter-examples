@@ -60,7 +60,6 @@ class _GameControlState extends State<GameControl> {
         height: widget.width,
         // Add color for capture event
         color: Colors.transparent,
-        child: null,
       ),
     );
   }

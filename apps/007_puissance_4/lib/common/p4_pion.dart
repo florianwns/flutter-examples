@@ -45,11 +45,11 @@ class P4Pion {
     switch (type) {
       case P4PionType.red:
         _image =
-            P4Theme.imgsPionRed[Random().nextInt(P4Theme.imgsPionRed.length)];
+            P4Theme.redPionImgs[Random().nextInt(P4Theme.redPionImgs.length)];
         break;
       case P4PionType.yellow:
         _image = P4Theme
-            .imgsPionJaune[Random().nextInt(P4Theme.imgsPionJaune.length)];
+            .yellowPionImgs[Random().nextInt(P4Theme.yellowPionImgs.length)];
         break;
       default:
         _image = null;

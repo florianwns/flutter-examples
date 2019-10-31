@@ -5,6 +5,7 @@ import '../common/p4_game.dart';
 
 import '../widgets/background_image.dart';
 import '../widgets/game_board.dart';
+import '../widgets/score_panel.dart';
 
 class GameScreen extends StatelessWidget {
   @override
@@ -26,13 +27,14 @@ class GameScreen extends StatelessWidget {
               title: Text('Puissance 4'),
               backgroundColor: Colors.transparent,
               elevation: 0.0,
-              actions: <Widget>[
-                Icon(Icons.menu),
-              ],
+              // actions: <Widget>[
+              //   Icon(Icons.menu),
+              // ],
             ),
             backgroundColor: Colors.transparent,
             body: Column(
               children: <Widget>[
+                ScorePanel(),
                 GameBoard(),
               ],
             ),

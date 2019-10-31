@@ -44,6 +44,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/images/background_d1536.png
+   - assets/images/scorebar_d640.png
    - assets/images/backboard_d1550.png
    - assets/images/frontboard_d1550.png
    - assets/images/pionjaune1_d200.png

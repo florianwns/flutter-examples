@@ -15,6 +15,10 @@ enum P4GameState {
 class P4Game extends ChangeNotifier {
   /// Player manager
   final P4PlayerManager _players = P4PlayerManager();
+  P4PlayerManager get players => _players;
+  
+  // Global Score : Red Player score less Yellow Player Score
+  int get globalScore => _players[0].score - _players[1].score;
 
   /// Game grid
   P4Grid _grid;

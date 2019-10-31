@@ -32,4 +32,11 @@ class P4PlayerManager {
   P4Player get current {
     return _players[_currentIndex];
   }
+
+  P4Player operator [](int index){
+    assert(_players.length > 0);
+    assert(index >= 0 && index < _players.length);
+    return _players[index];
+  }
+
 }
