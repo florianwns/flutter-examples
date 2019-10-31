@@ -20,7 +20,9 @@ This Git serves me especially to remember what I have been able to code in the p
 3. [Flutter assignement](apps/002_flutter_assignment)
 4. [Tricount clone](apps/003_tricount)
 5. [ListView from Json Data](apps/004_list_from_json)
-6. [Tic Tac Toe](apps/005_tictactoe)
+6. 🎮[Tic Tac Toe](apps/005_tictactoe)
+7. [Deli Meals](apps/006_deli_meals)
+8. 🎮[Puissance 4](apps/007_puissance_4)
 
 ## Links
 
