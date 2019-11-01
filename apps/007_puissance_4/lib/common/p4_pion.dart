@@ -8,14 +8,21 @@ import './p4_theme.dart';
 enum P4PionType {
   red,
   yellow,
-  length,
 }
 
 /// A droppable [P4Pion] class
 class P4DroppablePion extends P4Pion {
+  /// Column of the pion  on the grid
   final int column;
+
+  /// Row of the pion on the grid
   final int row;
 
+  /// True if the pion has a column and a row
+  bool get isValid => column != null && row != null;
+  bool get isNotValid => !isValid;
+
+  /// Constructor
   P4DroppablePion({
     @required type,
     @required this.column,
@@ -27,11 +34,16 @@ class P4DroppablePion extends P4Pion {
 
 /// [P4Pion] class
 class P4Pion {
+  /// Type of this pion
   final P4PionType type;
 
+  /// [Image] of this pion
   Image _image;
+
+  /// Returns the [Image] of the pion
   Image get image => _image;
 
+  /// Constructor
   P4Pion({
     @required this.type,
   }) {
@@ -40,7 +52,7 @@ class P4Pion {
     initImage();
   }
 
-  /// Color getter
+  /// Initialize the image of this pion
   void initImage() {
     switch (type) {
       case P4PionType.red:
@@ -56,6 +68,7 @@ class P4Pion {
     }
   }
 
+  /// Override the toString method
   @override
   String toString() {
     switch (type) {

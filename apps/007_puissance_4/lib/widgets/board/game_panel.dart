@@ -39,7 +39,7 @@ class GamePanel extends StatelessWidget {
           width: gridWidth,
           pionDiameter: pionDiameter,
           pionRadius: pionRadius,
-          color: P4Theme.dropColor,
+          color: P4Theme.lightColumnColor,
         ),
 
         // P4Game => Pions Manager
@@ -55,7 +55,7 @@ class GamePanel extends StatelessWidget {
         WinningPions(
           width: gridWidth,
           pionDiameter: pionDiameter,
-          color: P4Theme.dropColor,
+          color: P4Theme.lightColumnColor,
         ),
 
         // Game Gesture Detector => P4Engine

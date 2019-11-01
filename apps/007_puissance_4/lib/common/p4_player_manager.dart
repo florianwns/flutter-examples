@@ -1,7 +1,7 @@
 import 'p4_pion.dart';
 import 'p4_player.dart';
 
-/// List of [P4Player]
+/// A player manager for the game engine
 class P4PlayerManager {
   /// List of 2 Players
   final List<P4Player> _players = [
@@ -19,10 +19,12 @@ class P4PlayerManager {
   /// Index of the current player
   int _currentIndex = 0;
 
+  /// Pass to the next player
   void next() {
     _currentIndex = (_currentIndex + 1) % _players.length;
   }
 
+  /// Start the game with another player
   void startWithAnOtherPlayer() {
     _startIndex = (_startIndex + 1) % _players.length;
     _currentIndex = 0;
@@ -33,10 +35,10 @@ class P4PlayerManager {
     return _players[_currentIndex];
   }
 
-  P4Player operator [](int index){
+  /// Returns an [P4Player] according to the index 
+  P4Player operator [](int index) {
     assert(_players.length > 0);
     assert(index >= 0 && index < _players.length);
     return _players[index];
   }
-
 }

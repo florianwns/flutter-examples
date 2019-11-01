@@ -8,12 +8,16 @@ import '../../common/p4_control.dart';
 
 import './pion.dart';
 
+/// Drop Feeback widget
+/// Display a visual feedback when the user touch the screen
+/// Driven by the [P4Control] Provider object.
 class DropFeedback extends StatelessWidget {
   final double width;
   final double pionDiameter;
   final double pionRadius;
   final Color color;
 
+  /// Constructor
   DropFeedback({
     @required this.width,
     @required this.pionDiameter,
@@ -24,17 +28,18 @@ class DropFeedback extends StatelessWidget {
         assert(pionRadius != null),
         assert(color != null);
 
+  /// Build feedback from [P4Game] and [P4Control]
+  /// Draw a pion and ligth the selected column
   List<Widget> buildFeedback(P4Game game, P4Control control) {
     List<Widget> children = [];
+    final currentPion = game.currentPlayerPion;
 
-    final currentPion = game.currentPion;
-
-    // if the game is waiting for order and touch is activated
+    // If the game is waiting for order and touch is activated
     if (game.isWaitingForANewPion &&
         control.isValid &&
         control.isEnabled &&
         currentPion != null) {
-      // Draw column feedback
+      // Find the selected column and ligth it
       final int column = control.touch.dx ~/ pionDiameter;
       children.add(
         Positioned(
@@ -64,6 +69,7 @@ class DropFeedback extends StatelessWidget {
     return children;
   }
 
+  /// Build method
   @override
   Widget build(BuildContext context) {
     final control = Provider.of<P4Control>(context);
