@@ -91,12 +91,18 @@ class P4Game extends ChangeNotifier {
       : nextPlayer();
   }
   
+  /// Returns True if the column of the grid has place to drop a pion
+  /// False otherwise
+  /// 
   /// Add a new [P4Pion] in a [column] of the grid
-  /// Then notify the provider listeners
-  void addANewPionInAColumn(int column) {
-    _state = P4GameState.newPionToDrop;
-    _grid.add(column, currentPlayerPion);
-    notifyListeners();
+  /// Then notify the provider listeners if the pion has been added
+  bool tryToAddANewPionInAColumn(int column) {
+    final bool pionIsAdded = _grid.tryToAddPion(column, currentPlayerPion);
+    if(pionIsAdded){
+      _state = P4GameState.newPionToDrop;
+      notifyListeners();
+    }
+    return pionIsAdded;
   }
 
   /// Play a new Game

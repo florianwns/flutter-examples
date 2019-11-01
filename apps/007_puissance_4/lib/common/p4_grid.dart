@@ -50,11 +50,15 @@ class P4Grid {
     return _grid[column].length;
   }
 
+  /// Returns True if it's possible to drop a [pion] in the [column] of the grid
+  /// False otherwise
+  /// 
   /// Drop a [P4DroppablePion] of type [type] in a [column]
-  void add(int column, P4Pion pion) {
+  bool tryToAddPion(int column, P4Pion pion) {
     // Verify that we can drop a pion in this column
     if (!canDrop(column)) {
-      return;
+      // Returns false, if we can't drop the pion
+      return false;
     }
 
     // Save the last pion added and make the pion droppable
@@ -66,6 +70,9 @@ class P4Grid {
 
     // Add pion to the grid
     _grid[column].add(_lastPionAdded);
+
+    // Returns true if the pion has been added
+    return true;
   }
 
   /// Return a [List] of [P4DroppablePion]

@@ -32,25 +32,23 @@ class _GameControlState extends State<GameControl> {
 
   /// Handler on the release event
   void onRelease(P4Game game, P4Control control) {
-    if(control.isNotValid || control.isNotEnabled){
-      control.release();
-      return;
+    bool deactivatesControl = false;
+
+    // If control is valid and active => actions
+    if (control.isValid && control.isEnabled) {
+      if (game.isWaitingForANewPion) {
+        // Try to add a new pion
+        final int column = control.touch.dx ~/ widget.pionDiameter;
+        deactivatesControl = game.tryToAddANewPionInAColumn(column);
+      } else if (game.isOver) {
+        // Play a new Game
+        game.playNewGame();
+        deactivatesControl = true;
+      }
     }
     
-    // If control is valid and active => actions
-    if (game.isWaitingForANewPion) {
-      // We add a new pion
-      final int column = control.touch.dx ~/ widget.pionDiameter;
-      game.addANewPionInAColumn(column);
-    } else if (game.isOver) {
-      // Block control until the end of the animation
-      // If the game is finished, we play a new game
-      game.playNewGame();
-    }
-
-    // Relase touch and block control until the end of the animation
-    control.release();
-    control.deactivates();
+    // Relase touch and block the control if necessary
+    control.release(deactivates: deactivatesControl);
   }
 
   @override

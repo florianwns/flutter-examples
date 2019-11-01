@@ -20,13 +20,6 @@ class P4Control extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Set [_enabled] to false
-  /// Then notify the provider listeners
-  void deactivates() {
-    _enabled = false;
-    notifyListeners();
-  }
-
   /// The last touch position
   Offset _touch;
 
@@ -43,7 +36,13 @@ class P4Control extends ChangeNotifier {
   }
 
   /// Release the touch, set it to null
-  void release() => _touch = null;
+  void release({bool deactivates = false}){
+    _touch = null;
+    if(deactivates){
+      _enabled = false;
+    }
+    notifyListeners();
+  }
 
   /// True if the touch is not null
   bool get isValid => _touch != null;
