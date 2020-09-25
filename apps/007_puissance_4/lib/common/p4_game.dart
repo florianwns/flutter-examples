@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puissance_4/common/p4_grid.dart';
 
+import './p4_grid.dart';
 import './p4_pion.dart';
 import './p4_player_manager.dart';
 

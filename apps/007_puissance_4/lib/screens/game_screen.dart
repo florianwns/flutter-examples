@@ -19,7 +19,7 @@ class GameScreen extends StatelessWidget {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              builder: (_) => P4Game(cols: 7, rows: 6),
+              create: (_) => P4Game(cols: 7, rows: 6),
             ),
           ],
           child: Scaffold(

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:puissance_4/common/p4_pion.dart';
-
-import '../../common/p4_game.dart';
-import '../../common/p4_control.dart';
 
 import './falling_pion.dart';
+import '../../common/p4_control.dart';
+import '../../common/p4_game.dart';
+import '../../common/p4_pion.dart';
 
 class PionManager extends StatefulWidget {
   final double width;

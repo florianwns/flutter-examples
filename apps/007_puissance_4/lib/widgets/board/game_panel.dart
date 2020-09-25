@@ -16,7 +16,7 @@ class GamePanel extends StatelessWidget {
   List<SingleChildCloneableWidget> buildProviders(BuildContext context) {
     return [
       ChangeNotifierProvider(
-        builder: (_) => P4Control(),
+        create: (_) => P4Control(),
       ),
     ];
   }

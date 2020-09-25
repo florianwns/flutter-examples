@@ -1,11 +1,18 @@
-# Puissance 4
+# flutterapp
 
-A simple clone of ['Aligne 4'](https://apps.apple.com/fr/app/aligne-4-les-jeux-classiques/id604921715) made with Flutter from scratch.
+A new Flutter application.
 
-The main idea was to use providers and animations in Flutter in a funny project.
+## Getting Started
 
-There is no A.I. because i did not have time for this, but maybe later i hope. So it's just two players game.
+This project is a starting point for a Flutter application.
 
-Have fun ! 😀🎮
+A few resources to get you started if this is your first Flutter project:
 
-![](screenshots/1.gif)
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
+
+Migrate

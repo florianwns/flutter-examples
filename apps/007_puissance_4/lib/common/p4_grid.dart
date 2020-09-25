@@ -52,7 +52,7 @@ class P4Grid {
 
   /// Returns True if it's possible to drop a [pion] in the [column] of the grid
   /// False otherwise
-  /// 
+  ///
   /// Drop a [P4DroppablePion] of type [type] in a [column]
   bool tryToAddPion(int column, P4Pion pion) {
     // Verify that we can drop a pion in this column
